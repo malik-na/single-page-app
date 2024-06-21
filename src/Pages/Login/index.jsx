@@ -3,24 +3,29 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { auth } from "../../Components/firebase";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleSubmit = async (e) => {
+  const navigate = useNavigate();
+  async function handleSubmit(e) {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      window.location.href("/timeline");
+      console.log("success");
+      navigate("/app/timeline");
       toast.success("User Logged in successfully!", {
         position: "top-center",
       });
     } catch (error) {
+      console.log("failed");
+
       toast.error("User Login failed!", {
         position: "top-center",
       });
     }
-  };
+  }
   return (
     <Box
       sx={{

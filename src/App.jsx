@@ -234,11 +234,12 @@ import "./App.css";
 
 import "./App.css";
 import Navbar from "./Components/Navbar";
-import Login from "./Pages/Login";
-import SignUp from "./Pages/SignUp";
+
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+// import { auth } from "./Components/firebase";
+// import { useEffect, useState } from "react";
 
 const App = () => {
   return (
@@ -246,8 +247,6 @@ const App = () => {
       <Navbar />
       <Outlet />
       <ToastContainer />
-      {/* <Login /> */}
-      {/* <SignUp /> */}
     </div>
   );
 };

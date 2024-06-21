@@ -13,6 +13,8 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link, NavLink } from "react-router-dom";
+// import { auth } from "./Components/firebase";
+// import { useEffect, useState } from "react";
 
 const pages = ["Timeline", "Create", "Messages"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -35,6 +37,12 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  // const [user, setUser] = useState();
+  // useEffect(() => {
+  //   auth.onAuthStateChanged((user) => {
+  //     setUser(user);
+  //   }, []);
+  // });
 
   return (
     <AppBar position="static">
