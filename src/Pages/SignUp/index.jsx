@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { auth, db } from "../../Components/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
   const [username, setusername] = useState("");
@@ -71,6 +72,9 @@ const Signup = () => {
             </Button>
           </Stack>
         </form>
+        <p>
+          Have an account? <Link to="/">Login</Link>
+        </p>
       </Paper>
     </Box>
   );

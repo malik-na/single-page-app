@@ -3,7 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { auth } from "../../Components/firebase";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -57,6 +57,9 @@ const Login = () => {
             </Button>
           </Stack>
         </form>
+        <p>
+          Not registered? <Link to="signup">Signup</Link>
+        </p>
       </Paper>
     </Box>
   );

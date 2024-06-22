@@ -7,11 +7,17 @@ import Login from "./Pages/Login/index.jsx";
 import Timeline from "./Pages/Timeline/index.jsx";
 import Create from "./Pages/Create/index.jsx";
 import Messages from "./Pages/Messages/index.jsx";
+import Profile from "./Pages/Profile/index.jsx";
+import Signup from "./Pages/SignUp/index.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
+  },
+  {
+    path: "signup",
+    element: <Signup />,
   },
   {
     path: "/app",
@@ -28,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "messages",
         element: <Messages />,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
       },
     ],
   },

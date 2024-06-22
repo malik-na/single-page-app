@@ -12,12 +12,14 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
+
 // import { auth } from "./Components/firebase";
 // import { useEffect, useState } from "react";
 
 const pages = ["Timeline", "Create", "Messages"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Profile", "Account", "Dashboard"];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -37,12 +39,17 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  // const [user, setUser] = useState();
-  // useEffect(() => {
-  //   auth.onAuthStateChanged((user) => {
-  //     setUser(user);
-  //   }, []);
-  // });
+  const navigate = useNavigate();
+
+  const handleLogOut = async () => {
+    try {
+      await auth.signOut();
+      console.log("User logged out successfully!");
+      navigate("/");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <AppBar position="static">
@@ -166,9 +173,12 @@ function ResponsiveAppBar() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Link to={setting}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </Link>
                 </MenuItem>
               ))}
+              <MenuItem onClick={handleLogOut}>Logout</MenuItem>
             </Menu>
           </Box>
         </Toolbar>

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import "./App.css";
+import { useState } from "react";
 
 // import { useEffect, useState } from "react";
 
@@ -238,16 +238,20 @@ import Navbar from "./Components/Navbar";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import { auth } from "./Components/firebase";
-// import { useEffect, useState } from "react";
+import { BlogContext } from "./context/BlogContext";
 
 const App = () => {
+  const initialBlogs = JSON.parse(localStorage.getItem("blogs"));
+  const [blogs, setBlogs] = useState(initialBlogs || []);
+  const [blogContent, setBlogContent] = useState({});
   return (
-    <div>
+    <BlogContext.Provider
+      value={{ blogContent, setBlogContent, blogs, setBlogs }}
+    >
       <Navbar />
       <Outlet />
       <ToastContainer />
-    </div>
+    </BlogContext.Provider>
   );
 };
 
