@@ -10,7 +10,15 @@ const Create = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    setBlogs([...blogs, blogContent]);
+    setBlogs([
+      ...blogs,
+      {
+        ...blogContent,
+        id: Date.now(),
+        isLiked: false,
+        comments: [],
+      },
+    ]);
     setBlogContent({ title: "", description: "" });
   };
   useEffect(() => {

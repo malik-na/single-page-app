@@ -9,6 +9,7 @@ import Create from "./Pages/Create/index.jsx";
 import Messages from "./Pages/Messages/index.jsx";
 import Profile from "./Pages/Profile/index.jsx";
 import Signup from "./Pages/SignUp/index.jsx";
+import Comment from "./Components/Comment";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <Profile />,
+      },
+      {
+        path: "blog-detail/:blogId",
+        element: <Comment />,
       },
     ],
   },

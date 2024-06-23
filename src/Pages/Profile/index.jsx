@@ -5,7 +5,6 @@ import { Box, Paper } from "@mui/material";
 import { useEffect, useState } from "react";
 import { auth, db } from "../../Components/firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [userDetails, setUserDetails] = useState(null);
