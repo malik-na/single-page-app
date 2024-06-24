@@ -3,13 +3,19 @@ import { BlogContext } from "../../context/BlogContext";
 import { Box, Paper, Stack, Typography, IconButton } from "@mui/material";
 import { Comment, Favorite, Share } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { updateDataFirestore } from "../../utils";
 const BlogPost = () => {
   const { blogs, setBlogs, setBlogContent } = useContext(BlogContext);
-  const handleLike = (blogId) => {
-    const likedBlogs = blogs.map((blog) => {
-      return blog.id === blogId ? { ...blog, isLiked: !blog.isLiked } : blog;
+  const handleLike = (blog) => {
+    const likedBlogs = blogs.map((el) => {
+      return el.id === blog.id ? { ...el, isLiked: !el.isLiked } : el;
     });
     setBlogs(likedBlogs);
+    updateDataFirestore({
+      collectionName: "Blogs",
+      documentKey: blog.id,
+      data: { ...blog, isLiked: !blog.isLiked },
+    });
   };
   const navigate = useNavigate();
   const handleComment = (blog) => {
@@ -33,7 +39,7 @@ const BlogPost = () => {
               <div>
                 <IconButton
                   aria-label="like-button"
-                  onClick={() => handleLike(blog?.id)}
+                  onClick={() => handleLike(blog)}
                 >
                   <Favorite sx={{ color: blog.isLiked ? "red" : "grey" }} />
                 </IconButton>

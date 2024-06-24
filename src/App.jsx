@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // import { useEffect, useState } from "react";
 
@@ -239,11 +239,26 @@ import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BlogContext } from "./context/BlogContext";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "./Components/firebase";
 
 const App = () => {
-  const initialBlogs = JSON.parse(localStorage.getItem("blogs"));
-  const [blogs, setBlogs] = useState(initialBlogs || []);
+  const [blogs, setBlogs] = useState([]);
   const [blogContent, setBlogContent] = useState({});
+
+  const setBlogsData = async () => {
+    let temp = [];
+    const querySnapshot = await getDocs(collection(db, "Blogs"));
+    querySnapshot.forEach((doc) => {
+      temp.push(doc.data());
+    });
+    setBlogs(temp);
+  };
+
+  useEffect(() => {
+    setBlogsData();
+  }, []);
+
   return (
     <BlogContext.Provider
       value={{ blogContent, setBlogContent, blogs, setBlogs }}

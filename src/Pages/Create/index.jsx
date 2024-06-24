@@ -1,29 +1,46 @@
 import { Box, Stack, TextField, Typography, Button } from "@mui/material";
 import React, { useContext, useEffect } from "react";
 import { BlogContext } from "../../context/BlogContext";
+import { doc, setDoc } from "firebase/firestore";
+import { auth, db } from "../../Components/firebase";
+import { useNavigate } from "react-router-dom";
 
 const Create = () => {
   const { blogs, setBlogs, blogContent, setBlogContent } =
     useContext(BlogContext);
+
   const handleInput = (e, key) => {
     setBlogContent({ ...blogContent, [key]: e.target.value });
   };
-  const handleSubmit = (e) => {
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setBlogs([
+    const blogId = Date.now().toString();
+    const updatedBlogs = [
       ...blogs,
       {
         ...blogContent,
-        id: Date.now(),
+        id: blogId,
         isLiked: false,
         comments: [],
       },
-    ]);
+    ];
+    setBlogs(updatedBlogs);
+    const user = auth.currentUser;
+    await setDoc(doc(db, "Blogs", blogId), {
+      id: blogId,
+      title: blogContent.title,
+      description: blogContent.description,
+      isLiked: false,
+      comments: [],
+      userId: user.uid,
+    });
     setBlogContent({ title: "", description: "" });
+    navigate("/app/timeline");
   };
-  useEffect(() => {
-    localStorage.setItem("blogs", JSON.stringify(blogs));
-  }, [blogs]);
+
   return (
     <Box
       sx={{

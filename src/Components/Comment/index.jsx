@@ -1,21 +1,21 @@
 import { useContext, useState } from "react";
 import { BlogContext } from "../../context/BlogContext";
 import { Box, Stack, TextField, Button, Paper } from "@mui/material";
+import { updateDataFirestore } from "../../utils";
 
 const Comment = () => {
   const { blogContent, setBlogContent } = useContext(BlogContext);
   const [commentInput, setCommentInput] = useState("");
-  console.log("comment blog content", blogContent);
+
+  console.log("blogContent", blogContent);
 
   const handleInput = (e) => {
     setCommentInput(e.target.value);
   };
 
-  const newCommentId = Date.now();
-
-  const handleCommentSubmit = (e) => {
+  const handleCommentSubmit = async (e, blogId) => {
     e.preventDefault();
-    setBlogContent({
+    const updatedBlogContent = {
       ...blogContent,
       comments: [
         ...blogContent.comments,
@@ -25,6 +25,12 @@ const Comment = () => {
           commentReplies: [],
         },
       ],
+    };
+    setBlogContent(updatedBlogContent);
+    updateDataFirestore({
+      collectionName: "Blogs",
+      documentKey: blogContent.id,
+      data: { ...updatedBlogContent },
     });
     setCommentInput("");
   };
